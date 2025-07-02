@@ -1,0 +1,140 @@
+
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Calendar, MapPin, Camera } from 'lucide-react';
+
+const EventPage = () => {
+  const { eventId } = useParams();
+  
+  // Sample event data - you can customize this
+  const events = {
+    '1': {
+      title: "Wedding Ceremonies",
+      description: "Capturing the magic of your special day with romantic and timeless photography",
+      date: "Throughout 2024",
+      location: "Various Venues",
+      coverImage: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&h=600",
+      gallery: [
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&h=600"
+      ]
+    },
+    '2': {
+      title: "Portrait Sessions",
+      description: "Professional portraits that showcase your personality and natural beauty",
+      date: "2024 Sessions",
+      location: "Studio & Outdoor",
+      coverImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&h=600",
+      gallery: [
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=800&h=600"
+      ]
+    },
+    '3': {
+      title: "Family Gatherings",
+      description: "Heartwarming moments with your loved ones preserved for generations",
+      date: "2024 Gatherings",
+      location: "Homes & Parks",
+      coverImage: "https://images.unsplash.com/photo-1511895426328-dc8714efa430?auto=format&fit=crop&w=800&h=600",
+      gallery: [
+        "https://images.unsplash.com/photo-1511895426328-dc8714efa430?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1543807535-eceef0bc6599?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1576384411823-a8b1c0a6b36a?auto=format&fit=crop&w=800&h=600",
+        "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&h=600"
+      ]
+    }
+  };
+
+  const event = events[eventId as keyof typeof events];
+
+  if (!event) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">Event Not Found</h1>
+          <Link to="/" className="text-pink-600 hover:text-pink-700">Go back to home</Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100">
+      {/* Header */}
+      <div className="bg-white/80 backdrop-blur-sm border-b border-pink-100 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <Link 
+            to="/" 
+            className="inline-flex items-center space-x-2 text-pink-600 hover:text-pink-700 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back to Gallery</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <div className="relative h-96 overflow-hidden">
+        <img
+          src={event.coverImage}
+          alt={event.title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+        <div className="absolute bottom-8 left-8 text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{event.title}</h1>
+          <p className="text-lg mb-4 max-w-2xl">{event.description}</p>
+          <div className="flex items-center space-x-6 text-sm">
+            <div className="flex items-center space-x-2">
+              <Calendar className="w-4 h-4" />
+              <span>{event.date}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <MapPin className="w-4 h-4" />
+              <span>{event.location}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Camera className="w-4 h-4" />
+              <span>{event.gallery.length} Photos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Gallery */}
+      <div className="container mx-auto px-6 py-16">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+          Photo <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">Gallery</span>
+        </h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {event.gallery.map((image, index) => (
+            <div 
+              key={index}
+              className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+            >
+              <img
+                src={image}
+                alt={`${event.title} photo ${index + 1}`}
+                className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default EventPage;
